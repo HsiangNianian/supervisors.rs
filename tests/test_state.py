@@ -163,6 +163,12 @@ class TestFileBackend:
         b.save("k", {"v": 2})
         assert b.load("k") == {"v": 2}
 
+    def test_rejects_path_traversal_keys(self):
+        b = FileBackend(_FILE_BACKEND_DIR)
+        for bad_key in ["../etc/passwd", "foo/bar", "a\\b", "..hidden"]:
+            with pytest.raises(ValueError, match="invalid key"):
+                b.save(bad_key, {})
+
 
 # ====================================================================
 # RedisBackend (in-memory stub mode)
@@ -214,7 +220,8 @@ class TestRedisBackend:
     def test_default_prefix(self):
         b = RedisBackend()
         b.save("k", {})
-        assert "state:k" in b._memory
+        assert b.exists("k")
+        assert b.list_keys() == ["k"]
 
     def test_fallback_without_redis_package(self):
         """Passing a url when redis is not installed falls back gracefully."""
@@ -323,6 +330,13 @@ class TestStateDictLike:
         assert s.a == 1
         assert s.b == 2
         assert "a" in s.changes
+
+    def test_initial_changes_cleared_by_checkpoint(self):
+        s = State(initial={"a": 1})
+        assert s.dirty is True
+        s.checkpoint()
+        assert s.dirty is False
+        assert s.changes == set()
 
 
 # ====================================================================

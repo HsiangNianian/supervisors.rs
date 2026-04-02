@@ -135,9 +135,18 @@ class FileBackend(StateBackend):
         self._directory = directory
         os.makedirs(directory, exist_ok=True)
 
+    @staticmethod
+    def _validate_key(key: str) -> None:
+        """Reject keys that could cause path traversal."""
+        if "/" in key or "\\" in key or ".." in key:
+            raise ValueError(
+                f"invalid key {key!r}: must not contain '/', '\\', or '..'"
+            )
+
     def _path_for(self, key: str) -> str:
         """Return the file path for *key*."""
-        safe_name = key.replace(os.sep, "_") + ".json"
+        self._validate_key(key)
+        safe_name = key + ".json"
         return os.path.join(self._directory, safe_name)
 
     def save(self, key: str, data: dict[str, Any]) -> None:
