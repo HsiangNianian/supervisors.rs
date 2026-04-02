@@ -1,3 +1,5 @@
 from ._core import Message, Supervisor
+from .agent import Agent
+from .ext import Extension
 
-__all__ = ["Message", "Supervisor"]
+__all__ = ["Agent", "Extension", "Message", "Supervisor"]
