@@ -22,6 +22,25 @@ Features
   exceptions, logs them, and continues processing.
 * **Cross-language** — core written in Rust, usable from both Rust and Python
   via PyO3.
+* **Async support** — ``AsyncAgent`` and ``AsyncSupervisor`` for async/await
+  workflows.
+* **LLM integration** — providers for OpenAI, Anthropic, Azure, Bedrock,
+  and Ollama with unified ``invoke``/``stream``/``ainvoke``/``astream`` API.
+* **Workflow patterns** — ``Sequential``, ``Parallel``, ``Router``, ``Loop``
+  composable orchestration primitives.
+* **Graph execution** — DAG-based workflow engine with conditional edges and
+  topological execution.
+* **State management** — checkpoints, persistence, and multiple backends
+  (memory, file, Redis).
+* **Observability** — tracing with ``trace()`` decorator/context manager,
+  metrics with ``Counter``/``Gauge``/``Histogram``, Prometheus export.
+* **Production server** — FastAPI HTTP server with WebSocket real-time
+  streaming, YAML configuration, and Typer CLI.
+* **Multimodal messages** — image, audio, and file message types.
+* **Human-in-the-loop** — approval, input, and review gates for agent
+  workflows.
+* **Knowledge graph** — in-memory triple store with BFS path finding and
+  JSON persistence.
 
 Installation
 ------------
@@ -170,6 +189,76 @@ Beyond the built-in A2A, the ``A2AExtension`` adds broadcast and discovery:
 
    # Discover all agents on the supervisor
    names = a2a.discover_agents(agent)
+
+Observability
+-------------
+
+Tracing
+~~~~~~~
+
+Trace agent execution with context managers and decorators:
+
+.. code-block:: python
+
+   from supervisor.tracing import trace, get_tracer, TracingExtension
+
+   # Context manager
+   with trace("agent_execution") as span:
+       span.set_attribute("agent", "greeter")
+       agent.handle_message(msg)
+
+   # Decorator
+   @trace("process")
+   def process(data):
+       return transform(data)
+
+   # Auto-trace via extension
+   agent.use(TracingExtension())
+
+Metrics
+~~~~~~~
+
+Collect Prometheus-compatible metrics:
+
+.. code-block:: python
+
+   from supervisor.metrics import Counter, Histogram, get_registry
+
+   messages_processed = Counter("messages_processed", "Total processed")
+   messages_processed.inc()
+
+   latency = Histogram("message_latency", "Handling latency (s)")
+   with latency.time():
+       do_work()
+
+   print(get_registry().export())  # Prometheus text format
+
+Production server
+-----------------
+
+HTTP server with WebSocket support:
+
+.. code-block:: python
+
+   from supervisor.server import create_app, run_server
+   from supervisor.config import SupervisorConfig
+
+   config = SupervisorConfig.from_yaml("supervisor.yaml")
+   app = create_app(config=config)
+   run_server(app)
+
+CLI:
+
+.. code-block:: bash
+
+   # Start the server
+   supervisor-cli serve --config supervisor.yaml --port 8000
+
+   # Validate configuration
+   supervisor-cli config validate supervisor.yaml
+
+   # Display system info
+   supervisor-cli info
 
 API reference
 -------------

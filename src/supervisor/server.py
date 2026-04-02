@@ -11,10 +11,9 @@ Example::
     run_server(app, host="0.0.0.0", port=8000)
 """
 
-import asyncio
 import json
 import logging
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, List, Optional, Set
 
 from pydantic import BaseModel, Field
 

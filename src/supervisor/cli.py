@@ -20,11 +20,10 @@ from __future__ import annotations
 import importlib
 import json
 import sys
-from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 
-def _get_app() -> "Any":
+def _get_app() -> Any:
     """Create the Typer CLI application.
 
     Returns:
@@ -113,7 +112,7 @@ def _get_app() -> "Any":
         typer.echo(f"  Platform: {sys.platform}")
 
         try:
-            import supervisor._core as _core
+            import supervisor._core as _core  # noqa: F401
 
             typer.echo("  Rust core: available")
         except ImportError:
@@ -135,7 +134,6 @@ def _get_app() -> "Any":
         ),
     ) -> None:
         """Load agents from config and run a processing cycle."""
-        from supervisor._core import Message
         from supervisor._core import Supervisor as _CoreSupervisor
         from supervisor.config import SupervisorConfig
 
