@@ -39,3 +39,7 @@ logs/
 *.lib
 *.a
 *.so.*
+
+# virtual environment
+.venv/
+.pytest_cache/
