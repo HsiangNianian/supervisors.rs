@@ -3,7 +3,7 @@ requires = ["maturin>=1.4,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "supervisor"
+name = "supervisors"
 dynamic = ["version"]
 description = "Agent framework written in Rust and built for Rust/Python"
 authors = [{ name = "HsiangNianian", email = "i@jyunko.cn" }]
@@ -29,12 +29,12 @@ repository = "https://github.com/HsiangNianian/supervisor.rs"
 documentation = "https://supervisor-rs.readthedocs.io/"
 
 [project.scripts]
-supervisor-demo = "supervisor.__main__:main"
+supervisors = "supervisors.__main__:main"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "supervisor._core"
-python-package = "supervisor"
+module-name = "supervisors._core"
+python-package = "supervisors"
 python-source = "src"
 
 [tool.ruff]

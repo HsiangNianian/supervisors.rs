@@ -1,5 +1,5 @@
 [package]
-name = "supervisor"
+name = "supervisors"
 version = "0.1.0"
 edition = "2021"
 description = "Agent framework written in Rust and built for Rust/Python."

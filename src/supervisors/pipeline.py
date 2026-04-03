@@ -7,7 +7,7 @@ multi-step transformations, or any sequential processing pipeline.
 
 Example::
 
-    from supervisor import PipelineAgent, Message, Supervisor
+    from supervisors import PipelineAgent, Message, Supervisor
 
     def parse(ctx):
         ctx["parsed"] = ctx["input"].split(",")
@@ -30,10 +30,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor.agent import Agent
+from supervisors.agent import Agent
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
+    from supervisors._core import Message
 
 # Type alias for a pipeline stage function.
 StageFunc = Callable[[Dict[str, Any]], Dict[str, Any]]
@@ -71,9 +71,7 @@ class PipelineAgent(Agent):
         self._stages.append(stage)
         return self
 
-    def stage(
-        self, func: Optional[StageFunc] = None
-    ) -> Any:
+    def stage(self, func: Optional[StageFunc] = None) -> Any:
         """Decorator to register a function as a pipeline stage.
 
         Usage::
@@ -105,9 +103,7 @@ class PipelineAgent(Agent):
 
     # -- pipeline hooks ------------------------------------------------------
 
-    def on_pipeline_start(
-        self, msg: "Message", ctx: Dict[str, Any]
-    ) -> None:
+    def on_pipeline_start(self, msg: "Message", ctx: Dict[str, Any]) -> None:
         """Hook called before the first stage runs.
 
         Override to perform setup.  The default implementation is a no-op.
@@ -126,9 +122,7 @@ class PipelineAgent(Agent):
             ctx: The context dict after the stage ran.
         """
 
-    def on_pipeline_end(
-        self, msg: "Message", ctx: Dict[str, Any]
-    ) -> None:
+    def on_pipeline_end(self, msg: "Message", ctx: Dict[str, Any]) -> None:
         """Hook called after the last stage completes.
 
         Override to perform cleanup or send results.

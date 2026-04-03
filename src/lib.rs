@@ -339,8 +339,7 @@ impl Supervisor {
                     let handle = tokio::spawn(async move {
                         let mut count = 0usize;
                         for msg in messages {
-                            let result =
-                                Python::with_gil(|py| handler.call1(py, (msg,)));
+                            let result = Python::with_gil(|py| handler.call1(py, (msg,)));
                             match result {
                                 Ok(_) => count += 1,
                                 Err(e) => {

@@ -1,5 +1,5 @@
-from supervisor import Agent, Supervisor, Message
-from supervisor.ext.function_calling import FunctionCallingExtension
+from supervisors import Agent, Supervisor, Message
+from supervisors.ext.function_calling import FunctionCallingExtension
 
 
 class EchoAgent(Agent):
@@ -72,7 +72,8 @@ def main() -> None:
     echo.send("reverse", "A2A message from echo")
 
     processed = sup.run_once()
-    print(f"\nProcessed {processed} message(s) across {sup.agent_count()} agent(s).")
+    print(f"\nProcessed {processed} message(s) across {
+          sup.agent_count()} agent(s).")
     print(f"Registered agents: {sup.agent_names()}")
     print(f"Echo agent extensions: {echo.extensions}")
     print(f"Tool agent extensions: {tools.extensions}")

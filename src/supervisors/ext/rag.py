@@ -5,7 +5,7 @@ their own retrieval backend (ChromaDB, LightRAG, FAISS, etc.).
 
 Example::
 
-    from supervisor.ext.rag import RAGExtension
+    from supervisors.ext.rag import RAGExtension
 
     class ChromaRAG(RAGExtension):
         def __init__(self, collection):
@@ -25,11 +25,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, List, Optional
 
-from supervisor.ext import Extension
+from supervisors.ext import Extension
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
-    from supervisor.agent import Agent
+    from supervisors._core import Message
+    from supervisors.agent import Agent
 
 
 class RAGExtension(Extension):
@@ -48,9 +48,7 @@ class RAGExtension(Extension):
 
     name: str = "rag"
 
-    def __init__(
-        self, *, auto_retrieve: bool = True, top_k: int = 5
-    ) -> None:
+    def __init__(self, *, auto_retrieve: bool = True, top_k: int = 5) -> None:
         self.auto_retrieve = auto_retrieve
         self.top_k = top_k
 
@@ -65,18 +63,14 @@ class RAGExtension(Extension):
             query: The search query.
             top_k: Maximum number of results (defaults to ``self.top_k``).
         """
-        raise NotImplementedError(
-            "Subclass RAGExtension and implement retrieve()"
-        )
+        raise NotImplementedError("Subclass RAGExtension and implement retrieve()")
 
     def add_documents(self, docs: List[str], **kwargs: Any) -> None:
         """Ingest *docs* into the retrieval store.
 
         Override in your subclass.
         """
-        raise NotImplementedError(
-            "Subclass RAGExtension and implement add_documents()"
-        )
+        raise NotImplementedError("Subclass RAGExtension and implement add_documents()")
 
     # -- lifecycle hook -------------------------------------------------------
 
@@ -85,14 +79,12 @@ class RAGExtension(Extension):
         if not self.auto_retrieve:
             return None
 
-        from supervisor._core import Message as Msg
+        from supervisors._core import Message as Msg
 
         docs = self.retrieve(msg.content, self.top_k)
         if docs:
             context = "\n---\n".join(docs)
-            enriched_content = (
-                f"{msg.content}\n\n[RAG context]\n{context}"
-            )
+            enriched_content = f"{msg.content}\n\n[RAG context]\n{context}"
             return Msg(msg.sender, msg.recipient, enriched_content)
         return None
 

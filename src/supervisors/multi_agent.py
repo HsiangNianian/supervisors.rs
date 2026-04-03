@@ -7,7 +7,7 @@ problems.
 
 Example::
 
-    from supervisor import Agent, MultiAgent, Message, Supervisor
+    from supervisors import Agent, MultiAgent, Message, Supervisor
 
     class Worker(Agent):
         def handle_message(self, msg):
@@ -22,8 +22,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor._core import Message, Supervisor
-from supervisor.agent import Agent
+from supervisors._core import Message, Supervisor
+from supervisors.agent import Agent
 
 if TYPE_CHECKING:
     pass
@@ -161,9 +161,7 @@ class MultiAgent(Agent):
         targets = self._strategy(msg, list(self._members.keys()))
         for target_name in targets:
             if target_name in self._members:
-                self._inner_sup.send(
-                    Message(msg.sender, target_name, msg.content)
-                )
+                self._inner_sup.send(Message(msg.sender, target_name, msg.content))
 
         total = self.run_rounds()
         self.on_group_end(msg, total)

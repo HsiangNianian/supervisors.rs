@@ -6,7 +6,7 @@ A2A, …) can be loaded onto any agent via :meth:`Agent.use`.
 
 Example::
 
-    from supervisor import Agent, Supervisor, Message
+    from supervisors import Agent, Supervisor, Message
 
     class GreeterAgent(Agent):
         def handle_message(self, msg: Message) -> None:
@@ -23,8 +23,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional
 
-from supervisor._core import Message, Supervisor
-from supervisor.ext import Extension
+from supervisors._core import Message, Supervisor
+from supervisors.ext import Extension
 
 if TYPE_CHECKING:
     pass

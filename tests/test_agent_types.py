@@ -3,21 +3,22 @@ SupervisorAgent, and MultiAgent."""
 
 import pytest
 
-from supervisor._core import Message, Supervisor
-from supervisor.agent import Agent
-from supervisor.loop_agent import LoopAgent
-from supervisor.pipeline import PipelineAgent
-from supervisor.supervisor_agent import SupervisorAgent
-from supervisor.multi_agent import MultiAgent
-
+from supervisors._core import Message, Supervisor
+from supervisors.agent import Agent
+from supervisors.loop_agent import LoopAgent
+from supervisors.pipeline import PipelineAgent
+from supervisors.supervisor_agent import SupervisorAgent
+from supervisors.multi_agent import MultiAgent
 
 # ---------------------------------------------------------------------------
 # LoopAgent
 # ---------------------------------------------------------------------------
 
+
 class TestLoopAgent:
     def test_basic_loop(self):
         """Loop runs step() until done flag is set."""
+
         class Counter(LoopAgent):
             def step(self, state):
                 state["count"] = state.get("count", 0) + 1
@@ -82,7 +83,9 @@ class TestLoopAgent:
             def on_loop_end(self, msg, state, iterations):
                 final_states.append(state)
 
-        factory = lambda msg: {"custom_key": msg.content.upper()}
+        def factory(msg):
+            return {"custom_key": msg.content.upper()}
+
         sup = Supervisor()
         agent = Custom("custom", max_iterations=5, state_factory=factory)
         agent.register(sup)
@@ -92,6 +95,7 @@ class TestLoopAgent:
 
     def test_loop_run_loop_returns_state(self):
         """run_loop() returns the final state dict."""
+
         class Simple(LoopAgent):
             def step(self, state):
                 state["result"] = "computed"
@@ -122,6 +126,7 @@ class TestLoopAgent:
 # PipelineAgent
 # ---------------------------------------------------------------------------
 
+
 class TestPipelineAgent:
     def test_basic_pipeline(self):
         """Stages run in order."""
@@ -146,6 +151,7 @@ class TestPipelineAgent:
 
     def test_pipeline_add_stage_chaining(self):
         """add_stage returns self for chaining."""
+
         def s1(ctx):
             return ctx
 
@@ -170,6 +176,7 @@ class TestPipelineAgent:
 
     def test_pipeline_context_passes_through(self):
         """Context is passed from stage to stage."""
+
         def s1(ctx):
             ctx["step1"] = "done"
             return ctx
@@ -227,8 +234,10 @@ class TestPipelineAgent:
 
     def test_pipeline_stages_property(self):
         """stages property returns a copy."""
+
         def s(ctx):
             return ctx
+
         agent = PipelineAgent("p", stages=[s])
         stages = agent.stages
         stages.append(s)  # modify copy
@@ -238,6 +247,7 @@ class TestPipelineAgent:
 # ---------------------------------------------------------------------------
 # SupervisorAgent
 # ---------------------------------------------------------------------------
+
 
 class TestSupervisorAgent:
     def test_basic_delegation(self):
@@ -346,6 +356,7 @@ class TestSupervisorAgent:
 # ---------------------------------------------------------------------------
 # MultiAgent
 # ---------------------------------------------------------------------------
+
 
 class TestMultiAgent:
     def test_broadcast_to_all_members(self):
@@ -495,6 +506,7 @@ class TestMultiAgent:
 # Composition: SupervisorAgent + MultiAgent
 # ---------------------------------------------------------------------------
 
+
 class TestComposition:
     def test_supervisor_with_multi_agent_sub(self):
         """A SupervisorAgent can use a MultiAgent as a sub-agent."""
@@ -563,6 +575,7 @@ class TestComposition:
         """All new types are importable from the top-level package."""
         from supervisor import LoopAgent, PipelineAgent
         from supervisor import SupervisorAgent, MultiAgent
+
         assert LoopAgent is not None
         assert PipelineAgent is not None
         assert SupervisorAgent is not None

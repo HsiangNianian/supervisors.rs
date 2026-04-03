@@ -2,7 +2,7 @@
 
 import pytest
 
-from supervisor._core import Message, Supervisor
+from supervisors._core import Message, Supervisor
 
 
 class TestMessage:

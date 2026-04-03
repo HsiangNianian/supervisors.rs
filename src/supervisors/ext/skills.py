@@ -6,7 +6,7 @@ that takes the agent and the incoming message as arguments.
 
 Example::
 
-    from supervisor.ext.skills import SkillsExtension
+    from supervisors.ext.skills import SkillsExtension
 
     skills = SkillsExtension()
 
@@ -21,11 +21,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor.ext import Extension
+from supervisors.ext import Extension
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
-    from supervisor.agent import Agent
+    from supervisors._core import Message
+    from supervisors.agent import Agent
 
 
 class Skill:

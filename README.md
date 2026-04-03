@@ -1,6 +1,6 @@
 <div align="center">
 
-# supervisor.rs
+# supervisors.rs
 
 **A composable multi-agent framework powered by Rust and Python.**
 
@@ -10,7 +10,7 @@ Rust core and a flexible Python API.
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Rust](https://img.shields.io/badge/Rust-stable-orange.svg)](https://www.rust-lang.org/)
-[![Docs](https://readthedocs.org/projects/supervisor-rs/badge/?version=latest)](https://supervisor-rs.readthedocs.io/)
+[![Docs](https://readthedocs.org/projects/supervisors-rs/badge/?version=latest)](https://supervisor-rs.readthedocs.io/)
 
 [Getting Started](#getting-started) |
 [Agent Types](#agent-types) |
@@ -25,7 +25,7 @@ Rust core and a flexible Python API.
 
 ## Overview
 
-**supervisor.rs** is a cross-language agent framework designed for building
+**supervisors.rs** is a cross-language agent framework designed for building
 production-grade AI agent systems.  The core is written in Rust for
 performance and safety, while the Python API provides ergonomic abstractions
 for rapid development.
@@ -37,12 +37,12 @@ independently or composed together to solve complex, real-world problems:
 |---------|-------------|----------|
 | **Loop Agent** | LLM + iterative reasoning loop | ReAct agents, chain-of-thought, self-refinement |
 | **Pipeline Agent** | Sequential stage-based processing | ETL, data transformation, multi-step workflows |
-| **Supervisor + SubAgents** | Hierarchical delegation | Task routing, modular decomposition, microservices |
+| **Supervisors + SubAgents** | Hierarchical delegation | Task routing, modular decomposition, microservices |
 | **Multi-Agent** | Collaborative peer agents | Research teams, debate, consensus-building |
 
-All four patterns are composable -- a `SupervisorAgent` can manage
+All four patterns are composable -- a `SupervisorsAgent` can manage
 `MultiAgent` teams as sub-agents, a `LoopAgent` can embed pipeline logic,
-and any agent type can be registered on the same `Supervisor` instance.
+and any agent type can be registered on the same `Supervisors` instance.
 
 ---
 
@@ -60,7 +60,7 @@ maturin develop          # editable install for development
 ### Quick Start
 
 ```python
-from supervisor import Agent, Supervisor, Message
+from supervisors import Agent, Supervisor, Message
 
 class GreeterAgent(Agent):
     def handle_message(self, msg: Message) -> None:
@@ -85,7 +85,7 @@ The `LoopAgent` runs an iterative reasoning loop over each incoming message.
 Override the `step()` method to define per-iteration logic.
 
 ```python
-from supervisor import LoopAgent, Message
+from supervisors import LoopAgent, Message
 
 class ReasoningAgent(LoopAgent):
     def step(self, state):
@@ -106,7 +106,7 @@ The `PipelineAgent` processes messages through an ordered sequence of
 stage functions.
 
 ```python
-from supervisor import PipelineAgent, Message
+from supervisors import PipelineAgent, Message
 
 def parse(ctx):
     ctx["tokens"] = ctx["input"].split()
@@ -153,7 +153,7 @@ The `MultiAgent` coordinates a group of peer agents that collaborate
 to solve problems.
 
 ```python
-from supervisor import Agent, MultiAgent, Message, Supervisor
+from supervisors import Agent, MultiAgent, Message, Supervisor
 
 class Researcher(Agent):
     def handle_message(self, msg):
@@ -177,7 +177,7 @@ The real power emerges when you combine patterns.  For example, a
 `SupervisorAgent` can manage `MultiAgent` teams as sub-agents:
 
 ```python
-from supervisor import (
+from supervisors import (
     Agent, MultiAgent, SupervisorAgent, Message, Supervisor,
 )
 
@@ -233,7 +233,7 @@ extensions with `agent.use(extension)`:
 ### RAG (Retrieval-Augmented Generation)
 
 ```python
-from supervisor.ext.rag import RAGExtension
+from supervisors.ext.rag import RAGExtension
 
 class MyRAG(RAGExtension):
     def __init__(self):
@@ -252,7 +252,7 @@ agent.use(MyRAG())
 ### Function Calling
 
 ```python
-from supervisor.ext.function_calling import FunctionCallingExtension
+from supervisors.ext.function_calling import FunctionCallingExtension
 
 fc = FunctionCallingExtension()
 
@@ -267,7 +267,7 @@ result = fc.call_tool("add", a=1, b=2)  # returns 3
 ### MCP (Model Context Protocol)
 
 ```python
-from supervisor.ext.mcp import MCPExtension
+from supervisors.ext.mcp import MCPExtension
 
 mcp = MCPExtension(server_url="http://localhost:8080")
 
@@ -281,7 +281,7 @@ agent.use(mcp)
 ### Skills
 
 ```python
-from supervisor.ext.skills import SkillsExtension
+from supervisors.ext.skills import SkillsExtension
 
 skills = SkillsExtension()
 
@@ -298,7 +298,7 @@ Beyond the built-in A2A messaging (`agent.send()`), the A2A extension
 adds broadcast, discovery, and request/reply patterns:
 
 ```python
-from supervisor.ext.a2a import A2AExtension
+from supervisors.ext.a2a import A2AExtension
 
 a2a = A2AExtension()
 agent.use(a2a)
@@ -386,8 +386,8 @@ before submitting a pull request.
 
 ```bash
 # Development setup
-git clone https://github.com/HsiangNianian/supervisor.rs.git
-cd supervisor.rs
+git clone https://github.com/HsiangNianian/supervisors.rs.git
+cd supervisors.rs
 python -m venv .venv && source .venv/bin/activate
 pip install maturin pytest
 maturin develop --skip-install

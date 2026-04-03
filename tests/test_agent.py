@@ -2,19 +2,19 @@
 
 import pytest
 
-from supervisor._core import Message, Supervisor
-from supervisor.agent import Agent
-from supervisor.ext import Extension
-from supervisor.ext.rag import RAGExtension
-from supervisor.ext.function_calling import FunctionCallingExtension, ToolSpec
-from supervisor.ext.mcp import MCPExtension, MCPClient, MCPServer, MCPToolSpec
-from supervisor.ext.skills import SkillsExtension, Skill
-from supervisor.ext.a2a import A2AExtension
-
+from supervisors._core import Message, Supervisor
+from supervisors.agent import Agent
+from supervisors.ext import Extension
+from supervisors.ext.rag import RAGExtension
+from supervisors.ext.function_calling import FunctionCallingExtension, ToolSpec
+from supervisors.ext.mcp import MCPExtension, MCPClient, MCPServer, MCPToolSpec
+from supervisors.ext.skills import SkillsExtension, Skill
+from supervisors.ext.a2a import A2AExtension
 
 # ---------------------------------------------------------------------------
 # Agent base class
 # ---------------------------------------------------------------------------
+
 
 class TestAgent:
     def test_create_agent(self):
@@ -102,6 +102,7 @@ class TestAgent:
 # Extension base class
 # ---------------------------------------------------------------------------
 
+
 class TestExtension:
     def test_default_name(self):
         ext = Extension()
@@ -110,12 +111,14 @@ class TestExtension:
     def test_auto_name_from_subclass(self):
         class MyCustomExtension(Extension):
             pass
+
         ext = MyCustomExtension()
         assert ext.name == "MyCustomExtension"
 
     def test_explicit_name(self):
         class MyExt(Extension):
             name = "custom_name"
+
         ext = MyExt()
         assert ext.name == "custom_name"
 
@@ -124,6 +127,7 @@ class TestExtension:
 
         class TrackingExt(Extension):
             name = "tracking"
+
             def on_load(self, agent):
                 loaded.append(agent.name)
 
@@ -136,6 +140,7 @@ class TestExtension:
 
         class TrackingExt(Extension):
             name = "tracking"
+
             def on_unload(self, agent):
                 unloaded.append(agent.name)
 
@@ -149,11 +154,13 @@ class TestExtension:
 
         class Ext1(Extension):
             name = "shared"
+
             def on_unload(self, agent):
                 events.append("unload_1")
 
         class Ext2(Extension):
             name = "shared"
+
             def on_load(self, agent):
                 events.append("load_2")
 
@@ -171,10 +178,12 @@ class TestExtension:
     def test_on_message_modifies(self):
         class UpperExt(Extension):
             name = "upper"
+
             def on_message(self, agent, msg):
                 return Message(msg.sender, msg.recipient, msg.content.upper())
 
         received = []
+
         class MyAgent(Agent):
             def handle_message(self, msg):
                 received.append(msg.content)
@@ -190,10 +199,12 @@ class TestExtension:
     def test_on_message_swallow(self):
         class SwallowExt(Extension):
             name = "swallow"
+
             def on_message(self, agent, msg):
                 raise StopIteration
 
         received = []
+
         class MyAgent(Agent):
             def handle_message(self, msg):
                 received.append(msg.content)
@@ -220,6 +231,7 @@ class TestExtension:
 # ---------------------------------------------------------------------------
 # RAG Extension
 # ---------------------------------------------------------------------------
+
 
 class TestRAGExtension:
     def test_retrieve_not_implemented(self):
@@ -264,6 +276,7 @@ class TestRAGExtension:
                 pass
 
         received = []
+
         class MyAgent(Agent):
             def handle_message(self, msg):
                 received.append(msg.content)
@@ -291,6 +304,7 @@ class TestRAGExtension:
                 pass
 
         received = []
+
         class MyAgent(Agent):
             def handle_message(self, msg):
                 received.append(msg.content)
@@ -311,6 +325,7 @@ class TestRAGExtension:
 # ---------------------------------------------------------------------------
 # Function Calling Extension
 # ---------------------------------------------------------------------------
+
 
 class TestFunctionCallingExtension:
     def test_register_and_call_tool(self):
@@ -384,6 +399,7 @@ class TestFunctionCallingExtension:
 # MCP Extension
 # ---------------------------------------------------------------------------
 
+
 class TestMCPExtension:
     def test_mcp_tool_decorator(self):
         mcp = MCPExtension()
@@ -451,6 +467,7 @@ class TestMCPExtension:
 # Skills Extension
 # ---------------------------------------------------------------------------
 
+
 class TestSkillsExtension:
     def test_register_and_invoke(self):
         skills = SkillsExtension()
@@ -498,6 +515,7 @@ class TestSkillsExtension:
 # ---------------------------------------------------------------------------
 # A2A Extension
 # ---------------------------------------------------------------------------
+
 
 class TestA2AExtension:
     def test_broadcast(self):
@@ -572,6 +590,7 @@ class TestA2AExtension:
 # Integration: multiple extensions on one agent
 # ---------------------------------------------------------------------------
 
+
 class TestIntegration:
     def test_multiple_extensions(self):
         fc = FunctionCallingExtension()
@@ -596,15 +615,18 @@ class TestIntegration:
 
         class PrefixExt(Extension):
             name = "prefix"
+
             def on_message(self, agent, msg):
                 return Message(msg.sender, msg.recipient, "PREFIX:" + msg.content)
 
         class SuffixExt(Extension):
             name = "suffix"
+
             def on_message(self, agent, msg):
                 return Message(msg.sender, msg.recipient, msg.content + ":SUFFIX")
 
         received = []
+
         class MyAgent(Agent):
             def handle_message(self, msg):
                 received.append(msg.content)
@@ -624,8 +646,10 @@ class TestIntegration:
         class DummyRAG(RAGExtension):
             def __init__(self):
                 super().__init__(auto_retrieve=False)
+
             def retrieve(self, query, top_k=None):
                 return []
+
             def add_documents(self, docs, **kwargs):
                 pass
 

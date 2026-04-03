@@ -14,6 +14,7 @@ Usage::
 """
 
 from __future__ import annotations
+from supervisors import Agent, MultiAgent, Message, Supervisor
 
 import sys
 from pathlib import Path
@@ -22,8 +23,6 @@ from typing import Any, Dict, List
 _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root / "src"))
-
-from supervisor import Agent, MultiAgent, Message, Supervisor
 
 
 # ---------------------------------------------------------------------------
@@ -63,6 +62,7 @@ def lookup_data(topic: str) -> List[str]:
 # ---------------------------------------------------------------------------
 # Member agents
 # ---------------------------------------------------------------------------
+
 
 class DataGatherer(Agent):
     """Collects relevant data points for the research topic."""
@@ -126,7 +126,8 @@ class ReportWriter(Agent):
         report = (
             f"Research Report: {msg.content}\n"
             f"{'=' * 40}\n"
-            f"This report provides a comprehensive analysis of {msg.content}.\n"
+            f"This report provides a comprehensive analysis of {
+                msg.content}.\n"
             f"Key findings and recommendations are summarised below.\n"
             f"(Full report would integrate data from gatherer and analyst.)\n"
         )
@@ -137,6 +138,7 @@ class ReportWriter(Agent):
 # ---------------------------------------------------------------------------
 # Custom MultiAgent with hooks
 # ---------------------------------------------------------------------------
+
 
 class ResearchTeam(MultiAgent):
     """Research team that coordinates data gathering, analysis, and writing."""
@@ -154,6 +156,7 @@ class ResearchTeam(MultiAgent):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("Collaborative Research Team (Multi-Agent)")

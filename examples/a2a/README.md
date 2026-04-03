@@ -1,7 +1,7 @@
 # A2A Multi-Agent Example
 
 This example demonstrates an **Agent-to-Agent (A2A)** multi-agent system built
-with `supervisor.rs`.  Three agents collaborate via ReAct-style reasoning
+with `supervisors.rs`.  Three agents collaborate via ReAct-style reasoning
 powered by OpenAI:
 
 | Agent | Role | Tools |

@@ -13,6 +13,7 @@ Usage::
 """
 
 from __future__ import annotations
+from supervisors import Agent, SupervisorAgent, Message, Supervisor
 
 import sys
 from pathlib import Path
@@ -22,12 +23,11 @@ _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root / "src"))
 
-from supervisor import Agent, SupervisorAgent, Message, Supervisor
-
 
 # ---------------------------------------------------------------------------
 # Sub-agent implementations
 # ---------------------------------------------------------------------------
+
 
 class TextModerator(Agent):
     """Moderates text content using rule-based keyword matching."""
@@ -50,8 +50,8 @@ class TextModerator(Agent):
             "original": msg.content[:80],
         }
         self.results.append(result)
-        print(f"  [TextMod] {verdict} "
-              f"(flagged: {flagged if flagged else 'none'})")
+        print(f"  [TextMod] {verdict} (flagged: {
+              flagged if flagged else 'none'})")
 
 
 class ImageModerator(Agent):
@@ -65,8 +65,7 @@ class ImageModerator(Agent):
         # Simulated image moderation based on URL patterns.
         url = msg.content.strip()
         is_suspicious = any(
-            pattern in url.lower()
-            for pattern in ["unsafe", "explicit", "banned"]
+            pattern in url.lower() for pattern in ["unsafe", "explicit", "banned"]
         )
         verdict = "rejected" if is_suspicious else "approved"
         result = {
@@ -109,6 +108,7 @@ class SpamDetector(Agent):
 # Routing function
 # ---------------------------------------------------------------------------
 
+
 def content_router(msg: Message) -> str:
     """Route content to the appropriate moderation sub-agent.
 
@@ -129,6 +129,7 @@ def content_router(msg: Message) -> str:
 # Custom supervisor with hooks
 # ---------------------------------------------------------------------------
 
+
 class ModerationManager(SupervisorAgent):
     """Supervisor that manages content moderation sub-agents."""
 
@@ -142,6 +143,7 @@ class ModerationManager(SupervisorAgent):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("Content Moderation System (Supervisor + SubAgent)")

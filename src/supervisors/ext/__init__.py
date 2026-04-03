@@ -1,7 +1,7 @@
 """Extension plugin system for the supervisor agent framework.
 
-Extensions are loaded onto :class:`~supervisor.agent.Agent` subclasses via
-:meth:`Agent.use() <supervisor.agent.Agent.use>` and provide additional
+Extensions are loaded onto :class:`~supervisors.agent.Agent` subclasses via
+:meth:`Agent.use() <supervisors.agent.Agent.use>` and provide additional
 capabilities such as RAG, Function Calling, MCP, Skills, and A2A.
 
 Every extension inherits from :class:`Extension` and can hook into the
@@ -13,8 +13,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Optional
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
-    from supervisor.agent import Agent
+    from supervisors._core import Message
+    from supervisors.agent import Agent
 
 
 class Extension:
@@ -35,10 +35,11 @@ class Extension:
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
-        if not cls.name:
-            # Auto-derive a name from the class name when the author does
-            # not set one explicitly.
-            cls.name = cls.__name__
+
+    if not cls.name:
+        # Auto-derive a name from the class name when the author does
+        # not set one explicitly.
+        cls.name = cls.__name__
 
     # -- lifecycle hooks -----------------------------------------------------
 

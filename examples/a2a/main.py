@@ -1,4 +1,4 @@
-"""A2A Multi-Agent Example — ReAct-style reasoning with supervisor.rs.
+"""A2A Multi-Agent Example — ReAct-style reasoning with supervisors.rs.
 
 Three agents collaborate via a shared Supervisor:
 
@@ -28,7 +28,7 @@ import httpx
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from supervisor import Agent, Message, Supervisor
+from supervisors import Agent, Message, Supervisor
 
 # ---------------------------------------------------------------------------
 # Environment
@@ -399,7 +399,7 @@ def main() -> None:
     }
 
     # -- Register tool specs in Rust ToolRegistry (demonstration) ---------------
-    from supervisor._core import ToolRegistry, ToolSpec
+    from supervisors._core import ToolRegistry, ToolSpec
 
     tool_registry = ToolRegistry()
     for name, desc in [
@@ -411,10 +411,8 @@ def main() -> None:
         handler = main_agent.tool_map.get(name, lambda: None)
         tool_registry.register(spec, handler)
 
-    print(
-        f"[OK] {sup.agent_count()} agents registered: "
-        f"{', '.join(sup.agent_names())}"
-    )
+    print(f"[OK] {sup.agent_count()} agents registered: {
+          ', '.join(sup.agent_names())}")
     print(f"\nType a message to chat with the main agent.")
     print(f"Type 'quit' or Ctrl-C to exit.\n{'─' * 55}")
 

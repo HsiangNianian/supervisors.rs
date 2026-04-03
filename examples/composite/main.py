@@ -14,6 +14,7 @@ Usage::
 """
 
 from __future__ import annotations
+from supervisors import Agent, MultiAgent, SupervisorAgent, Message, Supervisor
 
 import sys
 from pathlib import Path
@@ -23,12 +24,11 @@ _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root / "src"))
 
-from supervisor import Agent, MultiAgent, SupervisorAgent, Message, Supervisor
-
 
 # ---------------------------------------------------------------------------
 # Infrastructure team members
 # ---------------------------------------------------------------------------
+
 
 class InfraMonitor(Agent):
     """Monitors infrastructure health metrics."""
@@ -85,6 +85,7 @@ class InfraVerifier(Agent):
 # Application team members
 # ---------------------------------------------------------------------------
 
+
 class AppLogger(Agent):
     """Analyses application logs for error patterns."""
 
@@ -132,12 +133,14 @@ class AppTester(Agent):
             "status": "mostly_passing",
         }
         self.test_results.append(results)
-        print(f"  [AppTester] Smoke tests: {results['passed']}/{results['total']} passed")
+        print(f"  [AppTester] Smoke tests: {
+                results['passed']}/{results['total']} passed")
 
 
 # ---------------------------------------------------------------------------
 # Multi-agent teams
 # ---------------------------------------------------------------------------
+
 
 class InfraTeam(MultiAgent):
     """Infrastructure response team."""
@@ -163,6 +166,7 @@ class AppTeam(MultiAgent):
 # Routing function
 # ---------------------------------------------------------------------------
 
+
 def incident_router(msg: Message) -> str:
     """Route incidents to the appropriate team.
 
@@ -186,6 +190,7 @@ def incident_router(msg: Message) -> str:
 # Incident Commander (SupervisorAgent)
 # ---------------------------------------------------------------------------
 
+
 class IncidentCommander(SupervisorAgent):
     """Top-level supervisor that routes incidents to specialised teams."""
 
@@ -199,6 +204,7 @@ class IncidentCommander(SupervisorAgent):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("DevOps Incident Response System (Composite)")
@@ -247,12 +253,12 @@ def main() -> None:
         (
             "monitoring_system",
             "CRITICAL: CPU usage at 95% on production server cluster, "
-            "memory pressure increasing, disk I/O latency spike detected"
+            "memory pressure increasing, disk I/O latency spike detected",
         ),
         (
             "error_tracker",
             "HIGH: Multiple TimeoutError exceptions in PaymentService, "
-            "API error rate at 5%, service degradation reported"
+            "API error rate at 5%, service degradation reported",
         ),
     ]
 

@@ -9,7 +9,7 @@ or any workflow that requires iterative refinement.
 
 Example::
 
-    from supervisor import LoopAgent, Message, Supervisor
+    from supervisors import LoopAgent, Message, Supervisor
 
     class ReasoningAgent(LoopAgent):
         def step(self, state):
@@ -28,10 +28,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, Optional
 
-from supervisor.agent import Agent
+from supervisors.agent import Agent
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
+    from supervisors._core import Message
 
 
 class LoopAgent(Agent):

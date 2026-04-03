@@ -12,6 +12,7 @@ Usage::
 """
 
 from __future__ import annotations
+from supervisors import PipelineAgent, Message, Supervisor
 
 import json
 import sys
@@ -23,12 +24,11 @@ _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root / "src"))
 
-from supervisor import PipelineAgent, Message, Supervisor
-
 
 # ---------------------------------------------------------------------------
 # Pipeline stages
 # ---------------------------------------------------------------------------
+
 
 def parse_log(ctx: Dict[str, Any]) -> Dict[str, Any]:
     """Parse a raw log line into structured fields.
@@ -98,6 +98,7 @@ def format_output(ctx: Dict[str, Any]) -> Dict[str, Any]:
 # Custom pipeline agent with hooks
 # ---------------------------------------------------------------------------
 
+
 class LogPipelineAgent(PipelineAgent):
     """Pipeline agent that processes log entries with stage-level logging."""
 
@@ -116,6 +117,7 @@ class LogPipelineAgent(PipelineAgent):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("Log Processing Pipeline Agent")
@@ -141,8 +143,10 @@ def main() -> None:
 
     processed = sup.run_once()
     print(f"\nProcessed {processed} log entries through pipeline.")
-    print(f"Pipeline has {agent.stage_count} stages: "
-          f"{', '.join(s.__name__ for s in agent.stages)}")
+    print(
+        f"Pipeline has {agent.stage_count} stages: "
+        f"{', '.join(s.__name__ for s in agent.stages)}"
+    )
 
 
 if __name__ == "__main__":

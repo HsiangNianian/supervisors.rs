@@ -7,7 +7,7 @@ delegates specialised work to child agents.
 
 Example::
 
-    from supervisor import (
+    from supervisors import (
         Agent, SupervisorAgent, Message, Supervisor,
     )
 
@@ -28,8 +28,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor._core import Message, Supervisor
-from supervisor.agent import Agent
+from supervisors._core import Message, Supervisor
+from supervisors.agent import Agent
 
 if TYPE_CHECKING:
     pass
@@ -128,12 +128,8 @@ class SupervisorAgent(Agent):
             KeyError: If no sub-agent with *sub_agent_name* exists.
         """
         if sub_agent_name not in self._sub_agents:
-            raise KeyError(
-                f"No sub-agent registered with name '{sub_agent_name}'"
-            )
-        self._inner_sup.send(
-            Message(self.name, sub_agent_name, content)
-        )
+            raise KeyError(f"No sub-agent registered with name '{sub_agent_name}'")
+        self._inner_sup.send(Message(self.name, sub_agent_name, content))
 
     def broadcast_to_subs(self, content: str) -> int:
         """Broadcast a message to all sub-agents.

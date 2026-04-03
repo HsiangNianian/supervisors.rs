@@ -3,13 +3,13 @@
 The :class:`A2AExtension` provides enhanced agent-to-agent communication
 features beyond the basic :meth:`Agent.send` built into the agent base class.
 
-While every :class:`~supervisor.agent.Agent` automatically supports basic
-A2A via :meth:`~supervisor.agent.Agent.send`, loading this extension adds
+While every :class:`~supervisors.agent.Agent` automatically supports basic
+A2A via :meth:`~supervisors.agent.Agent.send`, loading this extension adds
 broadcast, request/reply patterns, and agent discovery.
 
 Example::
 
-    from supervisor.ext.a2a import A2AExtension
+    from supervisors.ext.a2a import A2AExtension
 
     agent_a.use(A2AExtension())
     agent_b.use(A2AExtension())
@@ -22,11 +22,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor.ext import Extension
+from supervisors.ext import Extension
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
-    from supervisor.agent import Agent
+    from supervisors._core import Message
+    from supervisors.agent import Agent
 
 # Type alias for reply handler callbacks.
 ReplyHandler = Callable[..., Any]

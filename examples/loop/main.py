@@ -13,6 +13,7 @@ Usage::
 """
 
 from __future__ import annotations
+from supervisors import LoopAgent, Message, Supervisor
 
 import sys
 from pathlib import Path
@@ -23,12 +24,11 @@ _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root / "src"))
 
-from supervisor import LoopAgent, Message, Supervisor
-
 
 # ---------------------------------------------------------------------------
 # Simulated LLM helper
 # ---------------------------------------------------------------------------
+
 
 def simulated_llm(prompt: str) -> str:
     """Simulate an LLM response based on keyword matching.
@@ -57,6 +57,7 @@ def simulated_llm(prompt: str) -> str:
 # ---------------------------------------------------------------------------
 # Support Agent (LoopAgent subclass)
 # ---------------------------------------------------------------------------
+
 
 class SupportAgent(LoopAgent):
     """Customer support agent that reasons through tickets step by step.
@@ -128,6 +129,7 @@ class SupportAgent(LoopAgent):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("Customer Support Loop Agent")

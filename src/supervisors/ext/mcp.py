@@ -6,7 +6,7 @@ alternatively integrate the official MCP SDK.
 
 Example::
 
-    from supervisor.ext.mcp import MCPExtension, mcp_tool
+    from supervisors.ext.mcp import MCPExtension, mcp_tool
 
     mcp = MCPExtension(server_url="http://localhost:8080")
 
@@ -22,11 +22,11 @@ from __future__ import annotations
 import json
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from supervisor.ext import Extension
+from supervisors.ext import Extension
 
 if TYPE_CHECKING:
-    from supervisor._core import Message
-    from supervisor.agent import Agent
+    from supervisors._core import Message
+    from supervisors.agent import Agent
 
 
 class MCPToolSpec:
