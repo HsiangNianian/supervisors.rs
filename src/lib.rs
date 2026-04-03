@@ -1,3 +1,5 @@
+#![allow(clippy::useless_conversion)]
+
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 use serde::{Deserialize, Serialize};
@@ -154,6 +156,12 @@ impl ToolSpec {
 pub struct ToolRegistry {
     specs: HashMap<String, ToolSpec>,
     handlers: HashMap<String, PyObject>,
+}
+
+impl Default for ToolRegistry {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[pymethods]

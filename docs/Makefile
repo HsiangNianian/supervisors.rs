@@ -7,7 +7,7 @@ SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = _build
-SPHINXINTL    ?= sphinx-intl 
+SPHINXINTL    ?= sphinx-intl
 lang		  ?= zh_CN
 
 # Put it first so that "make" without argument is like "make help".

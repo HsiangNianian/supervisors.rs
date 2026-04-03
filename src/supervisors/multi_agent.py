@@ -20,7 +20,7 @@ Example::
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional
 
 from supervisors._core import Message, Supervisor
 from supervisors.agent import Agent

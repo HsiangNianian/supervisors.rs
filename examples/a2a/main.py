@@ -411,9 +411,8 @@ def main() -> None:
         handler = main_agent.tool_map.get(name, lambda: None)
         tool_registry.register(spec, handler)
 
-    print(f"[OK] {sup.agent_count()} agents registered: {
-          ', '.join(sup.agent_names())}")
-    print(f"\nType a message to chat with the main agent.")
+    print(f"[OK] {sup.agent_count()} agents registered: {', '.join(sup.agent_names())}")
+    print("\nType a message to chat with the main agent.")
     print(f"Type 'quit' or Ctrl-C to exit.\n{'─' * 55}")
 
     # -- Interactive loop ----------------------------------------------------

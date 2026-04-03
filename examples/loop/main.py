@@ -102,16 +102,16 @@ class SupportAgent(LoopAgent):
             state["review_result"] = verdict
             if verdict == "approved":
                 state["phase"] = "done"
-                print(f"  [review] Draft approved")
+                print("  [review] Draft approved")
             else:
                 # Rejected -- go back to drafting.
                 state["phase"] = "draft"
-                print(f"  [review] Draft rejected, redrafting...")
+                print("  [review] Draft rejected, redrafting...")
 
         elif phase == "done":
             state["done"] = True
             state["final_response"] = state["draft"]
-            print(f"  [done] Final response ready")
+            print("  [done] Final response ready")
 
         return state
 

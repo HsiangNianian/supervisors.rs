@@ -3,16 +3,19 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import os, sys
+import os
+import sys
 
 if sys.version_info >= (3, 11):
     import tomllib
 else:
     import tomli as tomllib
 
+
 def setup(app):
-    app.add_config_value('releaselevel', '', 'env')
-    
+    app.add_config_value("releaselevel", "", "env")
+
+
 DATA = None
 PYPROJECT = os.path.join("..", "..", "Cargo.toml")
 with open(PYPROJECT, "r", encoding="utf8") as f:
@@ -55,15 +58,15 @@ extensions = [
     "myst_parser",
 ]
 
-doctest_global_setup = '''
+doctest_global_setup = """
 try:
     import supervisor
 except ImportError:
     supervisor = None
-'''
+"""
 todo_include_todos = True
 todo_emit_warnings = True
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 extlinks = {
@@ -78,7 +81,7 @@ rst_prolog = """
 .. ifconfig:: releaselevel in ('alpha', 'beta', 'rc')
 
    .. warning::
-   
+
         This stuff is only included in the built docs for unstable versions.
 
 """
@@ -88,13 +91,13 @@ rst_epilog = """
 locale_dirs = ["../locales/"]  # path is example but recommended.
 gettext_compact = False  # optional.
 gettext_uuid = True  # optional.
-numfig = True # Figures, tables and code blocks are automatically numbered if they have a title
-pygments_style = "rrt" # default sphinx, change the style of code block
-math_number_all = True # Number all equations, figures, tables and code blocks
+numfig = True  # Figures, tables and code blocks are automatically numbered if they have a title
+pygments_style = "rrt"  # default sphinx, change the style of code block
+math_number_all = True  # Number all equations, figures, tables and code blocks
 html_additional_pages = {
-    'copy': 'copying.html',
+    "copy": "copying.html",
 }
-html_split_index = True # Split the index page by each alphabet
+html_split_index = True  # Split the index page by each alphabet
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 

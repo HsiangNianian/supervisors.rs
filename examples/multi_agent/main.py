@@ -18,7 +18,7 @@ from supervisors import Agent, MultiAgent, Message, Supervisor
 
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Dict, List
 
 _root = Path(__file__).resolve().parents[2]
 if str(_root) not in sys.path:
@@ -126,8 +126,7 @@ class ReportWriter(Agent):
         report = (
             f"Research Report: {msg.content}\n"
             f"{'=' * 40}\n"
-            f"This report provides a comprehensive analysis of {
-                msg.content}.\n"
+            f"This report provides a comprehensive analysis of {msg.content}.\n"
             f"Key findings and recommendations are summarised below.\n"
             f"(Full report would integrate data from gatherer and analyst.)\n"
         )
@@ -197,7 +196,7 @@ def main() -> None:
     print(f"  Reports written:      {len(writer.reports)}")
 
     if writer.reports:
-        print(f"\nLatest report preview:")
+        print("\nLatest report preview:")
         print(f"  {writer.reports[-1][:200]}...")
 
 

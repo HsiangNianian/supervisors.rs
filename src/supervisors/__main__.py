@@ -72,8 +72,7 @@ def main() -> None:
     echo.send("reverse", "A2A message from echo")
 
     processed = sup.run_once()
-    print(f"\nProcessed {processed} message(s) across {
-          sup.agent_count()} agent(s).")
+    print(f"\nProcessed {processed} message(s) across {sup.agent_count()} agent(s).")
     print(f"Registered agents: {sup.agent_names()}")
     print(f"Echo agent extensions: {echo.extensions}")
     print(f"Tool agent extensions: {tools.extensions}")

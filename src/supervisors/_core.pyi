@@ -6,7 +6,6 @@ exposed by the compiled Rust library.
 
 from typing import Callable, Optional
 
-
 class Message:
     """A message exchanged between agents."""
 
@@ -37,7 +36,6 @@ class Message:
     def __repr__(self) -> str: ...
     def __str__(self) -> str: ...
 
-
 class ToolSpec:
     """Specification for a registered tool, stored in Rust."""
 
@@ -56,7 +54,6 @@ class ToolSpec:
         ...
 
     def __repr__(self) -> str: ...
-
 
 class ToolRegistry:
     """Rust-backed registry for tool specifications and Python handlers."""
@@ -94,7 +91,6 @@ class ToolRegistry:
         """Check whether a tool is registered."""
         ...
 
-
 class Supervisor:
     """Manages agents and routes messages, powered by tokio async runtime."""
 
@@ -130,4 +126,3 @@ class Supervisor:
     def agent_count(self) -> int:
         """Return the total number of registered agents."""
         ...
-

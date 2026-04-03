@@ -7,7 +7,7 @@ from supervisors.agent import Agent
 from supervisors.ext import Extension
 from supervisors.ext.rag import RAGExtension
 from supervisors.ext.function_calling import FunctionCallingExtension, ToolSpec
-from supervisors.ext.mcp import MCPExtension, MCPClient, MCPServer, MCPToolSpec
+from supervisors.ext.mcp import MCPExtension, MCPClient
 from supervisors.ext.skills import SkillsExtension, Skill
 from supervisors.ext.a2a import A2AExtension
 
@@ -527,7 +527,6 @@ class TestA2AExtension:
 
         sup = Supervisor()
         agents = [Collector(n) for n in "abc"]
-        a2a = A2AExtension()
         for ag in agents:
             ag.use(A2AExtension())
             ag.register(sup)

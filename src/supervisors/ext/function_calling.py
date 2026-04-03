@@ -27,8 +27,7 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 from supervisors.ext import Extension
 
 if TYPE_CHECKING:
-    from supervisors._core import Message
-    from supervisors.agent import Agent
+    pass
 
 
 class ToolSpec:

@@ -50,8 +50,7 @@ class TextModerator(Agent):
             "original": msg.content[:80],
         }
         self.results.append(result)
-        print(f"  [TextMod] {verdict} (flagged: {
-              flagged if flagged else 'none'})")
+        print(f"  [TextMod] {verdict} (flagged: {flagged if flagged else 'none'})")
 
 
 class ImageModerator(Agent):

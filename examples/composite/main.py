@@ -40,9 +40,9 @@ class InfraMonitor(Agent):
     def handle_message(self, msg: Message) -> None:
         # Simulate metric checks.
         findings = [
-            f"CPU usage: 92% (critical)",
-            f"Memory: 78% (warning)",
-            f"Disk I/O: elevated latency detected",
+            "CPU usage: 92% (critical)",
+            "Memory: 78% (warning)",
+            "Disk I/O: elevated latency detected",
         ]
         self.findings.extend(findings)
         print(f"  [InfraMonitor] Checked {len(findings)} metrics")
@@ -78,7 +78,7 @@ class InfraVerifier(Agent):
 
     def handle_message(self, msg: Message) -> None:
         self.verified = True
-        print(f"  [InfraVerifier] Verification complete: systems recovering")
+        print("  [InfraVerifier] Verification complete: systems recovering")
 
 
 # ---------------------------------------------------------------------------
@@ -133,8 +133,9 @@ class AppTester(Agent):
             "status": "mostly_passing",
         }
         self.test_results.append(results)
-        print(f"  [AppTester] Smoke tests: {
-                results['passed']}/{results['total']} passed")
+        print(
+            f"  [AppTester] Smoke tests: {results['passed']}/{results['total']} passed"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -146,7 +147,7 @@ class InfraTeam(MultiAgent):
     """Infrastructure response team."""
 
     def on_group_start(self, msg):
-        print(f"\n  --- Infrastructure Team activated ---")
+        print("\n  --- Infrastructure Team activated ---")
 
     def on_group_end(self, msg, total):
         print(f"  --- Infrastructure Team done ({total} actions) ---")
@@ -156,7 +157,7 @@ class AppTeam(MultiAgent):
     """Application response team."""
 
     def on_group_start(self, msg):
-        print(f"\n  --- Application Team activated ---")
+        print("\n  --- Application Team activated ---")
 
     def on_group_end(self, msg, total):
         print(f"  --- Application Team done ({total} actions) ---")
