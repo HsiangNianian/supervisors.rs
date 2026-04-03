@@ -9,7 +9,7 @@ description = "Agent framework written in Rust and built for Rust/Python"
 authors = [{ name = "HsiangNianian", email = "i@jyunko.cn" }]
 dependencies = []
 requires-python = ">=3.9"
-readme = "README.rst"
+readme = "README.md"
 license = { text = "MIT" }
 keywords = ["agent", "supervisor", "actor", "framework"]
 classifiers = [

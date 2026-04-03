@@ -41,8 +41,8 @@ load_dotenv(_HERE / ".env")
 _api_key = os.getenv("OPENAI_API_KEY", "")
 if not _api_key:
     print(
-        "❌  OPENAI_API_KEY is not set.\n"
-        "    Copy .env.example → .env and fill in your key."
+        "Error: OPENAI_API_KEY is not set.\n"
+        "    Copy .env.example -> .env and fill in your key."
     )
     sys.exit(1)
 
@@ -283,7 +283,7 @@ class ReActAgent(Agent):
                 fn_name = tc.function.name
                 fn_args: dict[str, Any] = json.loads(tc.function.arguments)
 
-                print(f"  [{self.name}] 🔧 {fn_name}({fn_args})")
+                print(f"  [{self.name}] tool: {fn_name}({fn_args})")
 
                 if fn_name in self.tool_map:
                     result = str(self.tool_map[fn_name](**fn_args))
@@ -292,7 +292,7 @@ class ReActAgent(Agent):
 
                 # Truncate very long results for readability.
                 preview = result[:300] + ("…" if len(result) > 300 else "")
-                print(f"  [{self.name}] 📋 {preview}")
+                print(f"  [{self.name}] result: {preview}")
 
                 messages.append(
                     {
@@ -338,7 +338,7 @@ def _make_delegator(sub_agent: ReActAgent):
 
 
 def main() -> None:
-    print("🤖  A2A Multi-Agent System (supervisor.rs)")
+    print("A2A Multi-Agent System (supervisor.rs)")
     print("=" * 55)
 
     # -- Create Supervisor (backed by tokio) ---------------------------------
@@ -412,7 +412,7 @@ def main() -> None:
         tool_registry.register(spec, handler)
 
     print(
-        f"✅  {sup.agent_count()} agents registered: "
+        f"[OK] {sup.agent_count()} agents registered: "
         f"{', '.join(sup.agent_names())}"
     )
     print(f"\nType a message to chat with the main agent.")
@@ -421,7 +421,7 @@ def main() -> None:
     # -- Interactive loop ----------------------------------------------------
     while True:
         try:
-            user_input = input("\n🧑 You: ").strip()
+            user_input = input("\nYou: ").strip()
             if not user_input:
                 continue
             if user_input.lower() in {"quit", "exit", "q"}:
@@ -429,14 +429,14 @@ def main() -> None:
 
             print()
             response = main_agent.react(user_input)
-            print(f"\n🤖 Agent: {response}")
+            print(f"\nAgent: {response}")
 
         except (KeyboardInterrupt, EOFError):
             break
         except Exception as exc:
-            print(f"❌  Error: {exc}")
+            print(f"Error: {exc}")
 
-    print("\n👋  Goodbye!")
+    print("\nGoodbye!")
 
 
 if __name__ == "__main__":
