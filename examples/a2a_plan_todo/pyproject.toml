@@ -1,0 +1,13 @@
+[project]
+name = "a2a-plan-todo-example"
+version = "0.1.0"
+description = "A2A multi-agent example with PLAN/todo, write_file, read_file, and pwd+ls tools"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0",
+    "python-dotenv>=1.0",
+    "supervisors",
+]
+
+[tool.uv.sources]
+supervisors = { path = "../../", editable = true }
