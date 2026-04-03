@@ -401,4 +401,4 @@ python -m pytest tests/ -v
 
 ## License
 
-[MIT](LICENSE)
+[AGPLv3](LICENSE)
