@@ -60,9 +60,9 @@ extensions = [
 
 doctest_global_setup = """
 try:
-    import supervisor
+    import supervisors
 except ImportError:
-    supervisor = None
+    supervisors = None
 """
 todo_include_todos = True
 todo_emit_warnings = True
@@ -70,7 +70,10 @@ intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 extlinks = {
-    "issue": ("https://github.com/HsiangNianian/supervisor.rs/issues/%s", "[issue %s]"),
+    "issue": (
+        "https://github.com/HsiangNianian/supervisors.rs/issues/%s",
+        "[issue %s]",
+    ),
 }
 source_suffix = {
     ".rst": "restructuredtext",
@@ -103,11 +106,11 @@ html_split_index = True  # Split the index page by each alphabet
 
 html_theme = "furo"
 html_static_path = ["../_static"]
-_html_logo = (
-    "https://cdn.jsdelivr.net/gh/HydroRoll-Team/HydroRoll@main/docs/_static/logo.png"
-)
+# _html_logo = (
+# "https://cdn.jsdelivr.net/gh/HydroRoll-Team/HydroRoll@main/docs/_static/logo.png"
+# )
 # html_logo = _html_logo
-html_favicon = _html_logo
+# html_favicon = _html_logo
 
 html_css_files = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css",
@@ -119,19 +122,19 @@ html_show_sourcelink = True
 
 html_theme_options = {
     "announcement": "<em><a href='#'>documentation</a> is still under construction now, welcome any <a href='contributing.html'>contribution</a>!</em>",
-    "source_repository": "https://github.com/HsiangNianian/supervisor.rs/",
+    "source_repository": "https://github.com/HsiangNianian/supervisors.rs/",
     "source_branch": "main",
     "source_directory": "docs/source/",
     "footer_icons": [
         {
             "name": "GitHub",
-            "url": "https://github.com/HsiangNianian/supervisor.rs/",
+            "url": "https://github.com/HsiangNianian/supervisors.rs/",
             "html": "",
             "class": "fa-brands fa-github",
         },
         {
             "name": "Pypi",
-            "url": "https://pypi.org/project/supervisor/",
+            "url": "https://pypi.org/project/supervisors/",
             "html": "",
             "class": "fa-brands fa-python",
         },
